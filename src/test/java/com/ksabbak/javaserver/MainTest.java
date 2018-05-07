@@ -4,7 +4,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ServerTest {
+public class MainTest {
+    @Test
+    public void testTesting() {
+        assertTrue("This test should always return true", true);
+    }
+
     @Test
     public void statusCodeTest() {
         Server server = new Server();
