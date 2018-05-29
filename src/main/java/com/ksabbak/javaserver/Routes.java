@@ -39,22 +39,3 @@ public class Routes {
         }
     }
 }
-
-
-
-//class <class name> {
-//    private static final Map<Integer, String> tensNumberConversion = initMap();
-//
-//    private static Map<Integer, String> initMap() {
-//        Map<Integer, String> map = new HashMap<>();
-//        map.put(2, "twenty");
-//        map.put(3, "thirty");
-//        map.put(4, "forty");
-//        map.put(5, "fifty");
-//        map.put(6, "sixty");
-//        map.put(7, "seventy");
-//        map.put(8, "eighty");
-//        map.put(9, "ninety");
-//        return Collections.unmodifiableMap(map);
-//    }
-//}
