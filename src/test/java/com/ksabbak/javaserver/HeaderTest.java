@@ -6,32 +6,23 @@ import static org.junit.Assert.*;
 
 public class HeaderTest {
     @Test
-    public void methodAttributeTest(){
-        Header header = new Header("GET /path HTTP/1.1");
+    public void headerTest1(){
+        String headerString = "GET /path HTTP/1.1";
+        Header header = new Header(headerString);
+
         assertEquals("GET", header.method);
-
-        header = new Header("POST /path HTTP/1.1");
-        assertEquals("POST", header.method);
-    }
-
-    @Test
-    public void pathAttributeTest(){
-        Header header = new Header("GET /path HTTP/1.1");
         assertEquals("/path", header.path);
-
-        header = new Header("POST /pathy/path HTTP/1.1");
-        assertEquals("/pathy/path", header.path);
+        assertEquals(headerString, header.text);
     }
 
     @Test
-    public void textAttributeTest(){
-        String unparsedHeader = "GET /path HTTP/1.1";
-        Header header = new Header(unparsedHeader);
-        assertEquals(unparsedHeader, header.text);
+    public void headerTest2(){
+        String headerString = "POST /pathy/path HTTP/1.1";
+        Header header = new Header(headerString);
 
-        unparsedHeader = "POST /pathy/path HTTP/1.1";
-        header = new Header(unparsedHeader);
-        assertEquals(unparsedHeader, header.text);
+        assertEquals("POST", header.method);
+        assertEquals("/pathy/path", header.path);
+        assertEquals(headerString, header.text);
     }
 
 }

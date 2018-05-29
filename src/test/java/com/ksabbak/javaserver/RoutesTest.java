@@ -7,14 +7,21 @@ import static org.junit.Assert.*;
 public class RoutesTest {
 
     @Test
-    public void validRequestTest() {
+    public void validRequestTestValidPathValidMethod() {
         StatusCode statusCode = Routes.validRequest("GET", "/");
         assertEquals(StatusCode.OK, statusCode);
+    }
 
-        statusCode =  Routes.validRequest("OPTIONS", "/");
+    @Test
+    public void validRequestTestValidPathInvalidMethod() {
+        StatusCode statusCode = Routes.validRequest("OPTIONS", "/");
         assertEquals(StatusCode.NOT_FOUND, statusCode);
+    }
 
-        statusCode =  Routes.validRequest("GET", "/foobar");
+    @Test
+    public void validRequestTestInvalidPath() {
+        StatusCode statusCode = Routes.validRequest("GET", "/invalid-path");
         assertEquals(StatusCode.NOT_FOUND, statusCode);
     }
 }
+
