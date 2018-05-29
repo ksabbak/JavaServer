@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class HeaderTest {
     @Test
-    public void headerTest1(){
+    public void headerTestSimpleHeader(){
         String headerString = "GET /path HTTP/1.1";
         Header header = new Header(headerString);
 
@@ -16,7 +16,7 @@ public class HeaderTest {
     }
 
     @Test
-    public void headerTest2(){
+    public void headerTestSlightlyLongerSimpleHeader(){
         String headerString = "POST /pathy/path HTTP/1.1";
         Header header = new Header(headerString);
 

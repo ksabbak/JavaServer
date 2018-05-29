@@ -12,12 +12,4 @@ public class ResponseTest {
         assertEquals(expectedResponse, actualResponse);
     }
 
-    @Test
-    public void createResponseHeader2(){
-        String expectedResponse = "HTTP/1.1 422 Unprocessable Entity\r\n\r\n";
-        String actualResponse = Response.createResponse("422 Unprocessable Entity");
-
-        assertEquals(expectedResponse, actualResponse);
-    }
-
 }
