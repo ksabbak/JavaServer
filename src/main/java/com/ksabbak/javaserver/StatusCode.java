@@ -13,7 +13,7 @@ public enum StatusCode {
         this.text = text;
     }
 
-    public String getWholeStatus(){
+    public String statusAsString(){
         return Integer.toString(this.code) + " " + this.text;
     }
 }

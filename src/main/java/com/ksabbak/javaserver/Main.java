@@ -16,18 +16,18 @@ public class Main {
 
                 String unparsedHeader = "";
                 String line;
-                Boolean crlf = false;
+                Boolean blankLine = false;
 
-                while(!crlf && ((line = in.readLine()) != null)){
+                while(!blankLine && ((line = in.readLine()) != null)){
                     unparsedHeader += line;
                     if (line.trim().isEmpty()){
-                        crlf = true;
+                        blankLine = true;
                     }
                 }
 
                 Header header = new Header(unparsedHeader);
                 StatusCode statusCode = Routes.validRequest(header.method, header.path);
-                String httpResponse = Response.createResponse(statusCode.getWholeStatus());
+                String httpResponse = Response.createResponse(statusCode.statusAsString());
 
                 socket.getOutputStream().write(httpResponse.getBytes("UTF-8"));
             }
