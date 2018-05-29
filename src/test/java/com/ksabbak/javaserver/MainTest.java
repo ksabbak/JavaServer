@@ -10,10 +10,4 @@ public class MainTest {
         assertTrue("This test should always return true", true);
     }
 
-    @Test
-    public void statusCodeTest() {
-        Server server = new Server();
-        String result = server.statusCode();
-        assertEquals("Status: 200 OK", "200 OK", result);
-    }
 }
