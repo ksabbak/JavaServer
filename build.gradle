@@ -16,9 +16,9 @@ dependencies {
 
 jar {
     manifest {
-        attributes "Main-Class": "com.ksabbak.javaserver.Main"
+        attributes "Main-Class": "com.ksabbak.javaserver.server.Main"
         attributes "Class-Path": configurations.compile.collect { it.absolutePath }.join(" ")
     }
 }
 
-mainClassName = 'com.ksabbak.javaserver.Main'
+mainClassName = 'com.ksabbak.javaserver.server.Main'

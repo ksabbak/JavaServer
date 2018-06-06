@@ -1,4 +1,4 @@
-package com.ksabbak.javaserver;
+package com.ksabbak.javaserver.server;
 
 import org.junit.Test;
 
