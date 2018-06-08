@@ -19,12 +19,16 @@ public class Controller {
         return StatusCode.OK;
     }
 
+    public String bodyGet(){
+        return "";
+    }
+
     public StatusCode statusHead(){
         return StatusCode.OK;
     }
 
-    public String bodyGet(){
-        return "";
-    }
+
+
+
 
 }
