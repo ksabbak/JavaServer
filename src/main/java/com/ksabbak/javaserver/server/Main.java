@@ -21,12 +21,12 @@ public class Main {
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
                 List<Integer> unparsedHeader = new ArrayList<Integer>();
-                Integer bit;
+                Integer character;
 //                Boolean blankLine = false;
 
-                while((bit = in.read()) != -1){
-                    unparsedHeader.add(bit);
-                    System.out.println(bit);
+                while((character = in.read()) != -1){
+                    unparsedHeader.add(character);
+                    System.out.println(character);
                 }
 
                 RequestHeader requestHeader = new RequestHeader(unparsedHeader);
