@@ -4,6 +4,8 @@ import com.ksabbak.javaserver.app.controller.StatusCode;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -18,22 +20,18 @@ public class Main {
             try (Socket socket = serverSocket.accept();
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                String unparsedHeader = "";
-                String line;
-                Boolean blankLine = false;
+                List<Integer> unparsedHeader = new ArrayList<Integer>();
+                Integer bit;
+//                Boolean blankLine = false;
 
-                while(!blankLine && ((line = in.readLine()) != null)){
-                    unparsedHeader += line;
-                    if (line.trim().isEmpty()){
-                        blankLine = true;
-                    }
+                while((bit = in.read()) != -1){
+                    unparsedHeader.add(bit);
+                    System.out.println(bit);
                 }
 
                 RequestHeader requestHeader = new RequestHeader(unparsedHeader);
                 Response httpResponse = Router.respond(requestHeader.path, requestHeader.method);
                 String formattedResponse = httpResponse.formattedResponse();
-                System.out.println(formattedResponse);
-                System.out.println(requestHeader.method);
 
                 socket.getOutputStream().write(formattedResponse.getBytes("UTF-8"));
             }

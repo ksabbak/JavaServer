@@ -27,8 +27,11 @@ public class Controller {
         return StatusCode.OK;
     }
 
+    public StatusCode statusPost(){
+        return StatusCode.OK;
+    }
 
-
-
-
+    public String bodyPost(String body){
+        return "";
+    }
 }

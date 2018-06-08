@@ -13,6 +13,7 @@ public class Routes {
         map.put("/", new Object[]{HTTPMethod.GET, HTTPMethod.HEAD});
         map.put("/tea", new Object[]{HTTPMethod.GET});
         map.put("/coffee", new Object[]{HTTPMethod.GET});
+        map.put("/form", new Object[] {HTTPMethod.POST});
 
         return Collections.unmodifiableMap(map);
     }
