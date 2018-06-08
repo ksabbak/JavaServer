@@ -1,8 +1,12 @@
-package com.ksabbak.javaserver;
+package com.ksabbak.javaserver.server;
+import com.ksabbak.javaserver.router.Router;
+import com.ksabbak.javaserver.app.controller.StatusCode;
+
 import java.net.*;
 import java.io.*;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
 
         int portNumber = 5000;
@@ -25,11 +29,13 @@ public class Main {
                     }
                 }
 
-                Header header = new Header(unparsedHeader);
-                StatusCode statusCode = Routes.validRequest(header.method, header.path);
-                String httpResponse = Response.createResponse(statusCode.statusAsString());
+                RequestHeader requestHeader = new RequestHeader(unparsedHeader);
+                Response httpResponse = Router.respond(requestHeader.path, requestHeader.method);
+                String formattedResponse = httpResponse.formattedResponse();
+                System.out.println(formattedResponse);
+                System.out.println(requestHeader.method);
 
-                socket.getOutputStream().write(httpResponse.getBytes("UTF-8"));
+                socket.getOutputStream().write(formattedResponse.getBytes("UTF-8"));
             }
         }
     }

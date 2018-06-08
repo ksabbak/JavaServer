@@ -1,8 +1,9 @@
-package com.ksabbak.javaserver;
+package com.ksabbak.javaserver.app.controller;
 
 public enum StatusCode {
     OK(200, "OK"),
-    NOT_FOUND(404, "Not Found");
+    NOT_FOUND(404, "Not Found"),
+    TEAPOT(418, "I'm a teapot");
 
 
     public int code;
