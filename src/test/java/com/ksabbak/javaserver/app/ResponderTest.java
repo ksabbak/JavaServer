@@ -5,6 +5,9 @@ import org.junit.Test;
 import com.ksabbak.javaserver.app.controller.Controller;
 import com.ksabbak.javaserver.app.controller.StatusCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResponderTest {
 
     @Test
@@ -16,7 +19,10 @@ public class ResponderTest {
 
     @Test
     public void controllerTestWithGET(){
-        Controller controller = new Controller(new Object[] {HTTPMethod.GET});
+        List<HTTPMethod> methods = new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.GET);
+        }};
+        Controller controller = new Controller(methods);
         Responder responder = new Responder(controller);
         assert(StatusCode.OK == responder.getGetStatus());
     }
@@ -30,14 +36,21 @@ public class ResponderTest {
 
     @Test
     public void controllerTestWithHEAD(){
-        Controller controller = new Controller(new Object[] {HTTPMethod.GET, HTTPMethod.HEAD});
+        List<HTTPMethod> methods = new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.GET);
+            add(HTTPMethod.HEAD);
+        }};
+        Controller controller = new Controller(methods);
         Responder responder = new Responder(controller);
         assert(StatusCode.OK == responder.getHeadStatus());
     }
 
     @Test
     public void controllerTestGetStatusForMethodHasMethod(){
-        Controller controller = new Controller(new Object[] {HTTPMethod.GET});
+        List<HTTPMethod> methods = new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.GET);
+        }};
+        Controller controller = new Controller(methods);
         Responder responder = new Responder(controller);
         assert(StatusCode.OK == responder.getStatusForMethod(HTTPMethod.GET));
     }

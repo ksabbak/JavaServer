@@ -1,17 +1,22 @@
 package com.ksabbak.javaserver.app.controller;
 
+import com.ksabbak.javaserver.server.HTTPMethod;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller {
-    protected Object[] methods;
+    protected List<HTTPMethod> methods;
 
     public Controller(){
-        this(new Object[]{});
+        this(new ArrayList<HTTPMethod>());
     }
 
-    public Controller(Object[] methods){
+    public Controller(List<HTTPMethod> methods){
         this.methods = methods;
     }
 
-    public final Object[] getMethods(){
+    public final List<HTTPMethod> getMethods(){
         return methods;
     }
 
