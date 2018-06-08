@@ -1,25 +1,33 @@
 package com.ksabbak.javaserver.app;
 import com.ksabbak.javaserver.server.HTTPMethod;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Routes {
-    private static final Map<String, Object[]> routes = initMap();
+    private static final Map<String, List<HTTPMethod>> routes = initMap();
 
-    private static Map<String, Object[]> initMap() {
-        Map<String, Object[]> map = new HashMap<String, Object[]>();
-        map.put("/", new Object[]{HTTPMethod.GET, HTTPMethod.HEAD});
-        map.put("/tea", new Object[]{HTTPMethod.GET});
-        map.put("/coffee", new Object[]{HTTPMethod.GET});
-        map.put("/form", new Object[] {HTTPMethod.POST});
+    private static Map<String, List<HTTPMethod>> initMap() {
+        Map<String, List<HTTPMethod>> map = new HashMap<String, List<HTTPMethod>>();
+        map.put("/", new ArrayList<HTTPMethod>() {{
+            add(HTTPMethod.GET);
+            add(HTTPMethod.HEAD);
+        }});
+        map.put("/tea", new ArrayList<HTTPMethod>() {{
+            add(HTTPMethod.GET);
+        }});
+        map.put("/coffee", new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.GET);
+        }});
+        map.put("/form", new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.POST);
+        }});
+
 
         return Collections.unmodifiableMap(map);
     }
 
-    public static Object[] methodsForPath(String path){
-        return routes.getOrDefault(path, new Object[]{});
+    public static List<HTTPMethod> methodsForPath(String path){
+        return routes.getOrDefault(path, new ArrayList<HTTPMethod>());
     }
 
 }

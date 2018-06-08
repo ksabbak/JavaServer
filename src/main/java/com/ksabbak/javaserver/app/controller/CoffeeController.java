@@ -1,7 +1,11 @@
 package com.ksabbak.javaserver.app.controller;
 
+import com.ksabbak.javaserver.server.HTTPMethod;
+
+import java.util.List;
+
 public class CoffeeController extends Controller {
-    public CoffeeController(Object[] methods){
+    public CoffeeController(List<HTTPMethod> methods){
         super(methods);
     }
 

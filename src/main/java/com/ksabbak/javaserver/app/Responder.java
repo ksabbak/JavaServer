@@ -5,6 +5,7 @@ import com.ksabbak.javaserver.app.controller.Controller;
 import com.ksabbak.javaserver.server.HTTPMethod;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Responder {
     protected StatusCode statusGet = StatusCode.NOT_FOUND;
@@ -14,11 +15,11 @@ public class Responder {
 
     public Responder(Controller controller){
         this.controller = controller;
-        Object[] methods = controller.getMethods();
-        if (Arrays.asList(methods).contains(HTTPMethod.GET)){
+        List<HTTPMethod> methods = controller.getMethods();
+        if (methods.contains(HTTPMethod.GET)){
             setGetStatus();
         }
-        if (Arrays.asList(methods).contains(HTTPMethod.GET)){
+        if (methods.contains(HTTPMethod.HEAD)){
             setHeadStatus();
         }
     }
