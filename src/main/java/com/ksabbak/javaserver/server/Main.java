@@ -1,6 +1,5 @@
 package com.ksabbak.javaserver.server;
 import com.ksabbak.javaserver.router.Router;
-import com.ksabbak.javaserver.app.controller.StatusCode;
 
 import java.net.*;
 import java.io.*;
@@ -20,17 +19,33 @@ public class Main {
             try (Socket socket = serverSocket.accept();
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                List<Integer> unparsedHeader = new ArrayList<Integer>();
-                Integer character;
-//                Boolean blankLine = false;
+                String unparsedHeader = "";
+                String line;
+                Boolean blankLine = false;
 
-                while((character = in.read()) != -1){
-                    unparsedHeader.add(character);
-                    System.out.println(character);
+                while(!blankLine && ((line = in.readLine()) != null)){
+                    unparsedHeader += line + "\n";
+                    if (line.trim().isEmpty()){
+                        blankLine = true;
+                    }
                 }
 
-                RequestHeader requestHeader = new RequestHeader(unparsedHeader);
-                Response httpResponse = Router.respond(requestHeader.path, requestHeader.method);
+                RequestParser requestParser = new RequestParser(unparsedHeader);
+
+                List<Integer> unparsedBody = new ArrayList<Integer>();
+                Integer character;
+                int length = 0;
+
+                while((length < requestParser.getContentLength())  && ((character = in.read())!= -1)) {
+                    unparsedBody.add(character);
+                    length++;
+                }
+
+                requestParser.addBody(unparsedBody);
+                RequestData requestData = requestParser.parse();
+
+
+                Response httpResponse = Router.respond(requestData);
                 String formattedResponse = httpResponse.formattedResponse();
 
                 socket.getOutputStream().write(formattedResponse.getBytes("UTF-8"));
