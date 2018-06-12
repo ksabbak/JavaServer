@@ -21,6 +21,9 @@ public class Routes {
         map.put("/form", new ArrayList<HTTPMethod>(){{
             add(HTTPMethod.POST);
         }});
+        map.put("/put-target", new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.PUT);
+        }});
 
 
         return Collections.unmodifiableMap(map);

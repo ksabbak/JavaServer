@@ -1,8 +1,5 @@
 package com.ksabbak.javaserver.server;
 
-import com.ksabbak.javaserver.app.controller.Controller;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RequestParser {
@@ -55,7 +52,6 @@ public class RequestParser {
     }
 
     private String parseBody(List<Integer> unparsedRequest){
-        int size = unparsedRequest.size();
         String parsedRequest = "";
         for (Integer charOfUnparsedRequest : unparsedRequest) {
             int simpleInt = charOfUnparsedRequest;

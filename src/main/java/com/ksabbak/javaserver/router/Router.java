@@ -13,10 +13,6 @@ public class Router {
         String path = requestData.getPath();
         String params = requestData.getBody();
 
-        System.out.println("Inside the router");
-        System.out.println(path);
-        System.out.println(method);
-
         Controller controller =  ControllerFactory.getController(path);
         Responder responder = new Responder(controller);
         String status = responder.getStatusForMethod(method).statusAsString();

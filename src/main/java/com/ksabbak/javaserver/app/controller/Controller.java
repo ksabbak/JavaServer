@@ -42,6 +42,12 @@ public class Controller {
         return "";
     }
 
+    public StatusCode statusPut() { return StatusCode.OK; }
+
+    public String bodyPut(String body){
+        return "";
+    }
+
     protected Map<String, String> stringToHashMap(String unparsedParams){
         Map<String, String> params = new HashMap<String, String>();
         String[] splitParams = unparsedParams.split("&");

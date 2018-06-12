@@ -10,6 +10,7 @@ public class Responder {
     private StatusCode statusGet = StatusCode.NOT_FOUND;
     private StatusCode statusHead = StatusCode.NOT_FOUND;
     private StatusCode statusPost = StatusCode.NOT_FOUND;
+    private StatusCode statusPut = StatusCode.NOT_FOUND;
 
     private Controller controller;
 
@@ -25,6 +26,9 @@ public class Responder {
         if (methods.contains(HTTPMethod.POST)){
             setPostStatus();
         }
+        if (methods.contains(HTTPMethod.PUT)){
+            setPutStatus();
+        }
     }
 
     public final StatusCode getStatusForMethod(HTTPMethod method){
@@ -35,6 +39,8 @@ public class Responder {
                 return getHeadStatus();
             case POST:
                 return getPostStatus();
+            case PUT:
+                return getPutStatus();
             default:
                 return StatusCode.NOT_FOUND;
         }
@@ -50,6 +56,8 @@ public class Responder {
                 return getGetBody();
             case POST:
                 return getPostBody(params);
+            case PUT:
+                return getPutBody(params);
             default:
                 return "";
         }
@@ -86,5 +94,18 @@ public class Responder {
 
     private String getPostBody(String params){
         return controller.bodyPost(params);
+    }
+
+    public StatusCode getPutStatus(){
+        return statusPut;
+    }
+
+    private void setPutStatus(){
+        statusPut = controller.statusPut();
+        System.out.println(statusPut);
+    }
+
+    private String getPutBody(String params){
+        return controller.bodyPut(params);
     }
 }

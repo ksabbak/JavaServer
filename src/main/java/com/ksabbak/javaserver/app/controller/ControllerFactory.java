@@ -15,6 +15,8 @@ public class ControllerFactory {
                 return new FormController(methods);
             case "/redirect":
                 return new RedirectController(methods);
+            case "/put-target":
+                return new PutTargetController(methods);
             default:
                 return new Controller(methods);
         }
