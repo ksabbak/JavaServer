@@ -1,9 +1,10 @@
 package com.ksabbak.javaserver.server;
 import com.ksabbak.javaserver.router.Router;
-import com.ksabbak.javaserver.app.controller.StatusCode;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -23,17 +24,29 @@ public class Main {
                 Boolean blankLine = false;
 
                 while(!blankLine && ((line = in.readLine()) != null)){
-                    unparsedHeader += line;
+                    unparsedHeader += line + "\n";
                     if (line.trim().isEmpty()){
                         blankLine = true;
                     }
                 }
 
-                RequestHeader requestHeader = new RequestHeader(unparsedHeader);
-                Response httpResponse = Router.respond(requestHeader.path, requestHeader.method);
+                RequestParser requestParser = new RequestParser(unparsedHeader);
+
+                List<Integer> unparsedBody = new ArrayList<Integer>();
+                Integer character;
+                int length = 0;
+
+                while((length < requestParser.getContentLength())  && ((character = in.read())!= -1)) {
+                    unparsedBody.add(character);
+                    length++;
+                }
+
+                requestParser.addBody(unparsedBody);
+                RequestData requestData = requestParser.parse();
+
+
+                Response httpResponse = Router.respond(requestData);
                 String formattedResponse = httpResponse.formattedResponse();
-                System.out.println(formattedResponse);
-                System.out.println(requestHeader.method);
 
                 socket.getOutputStream().write(formattedResponse.getBytes("UTF-8"));
             }

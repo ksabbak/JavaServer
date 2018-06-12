@@ -4,12 +4,12 @@ import com.ksabbak.javaserver.app.controller.StatusCode;
 import com.ksabbak.javaserver.app.controller.Controller;
 import com.ksabbak.javaserver.server.HTTPMethod;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Responder {
-    protected StatusCode statusGet = StatusCode.NOT_FOUND;
-    protected StatusCode statusHead = StatusCode.NOT_FOUND;
+    private StatusCode statusGet = StatusCode.NOT_FOUND;
+    private StatusCode statusHead = StatusCode.NOT_FOUND;
+    private StatusCode statusPost = StatusCode.NOT_FOUND;
 
     private Controller controller;
 
@@ -22,6 +22,9 @@ public class Responder {
         if (methods.contains(HTTPMethod.HEAD)){
             setHeadStatus();
         }
+        if (methods.contains(HTTPMethod.POST)){
+            setPostStatus();
+        }
     }
 
     public final StatusCode getStatusForMethod(HTTPMethod method){
@@ -30,15 +33,23 @@ public class Responder {
                 return getGetStatus();
             case HEAD:
                 return getHeadStatus();
+            case POST:
+                return getPostStatus();
             default:
                 return StatusCode.NOT_FOUND;
         }
     }
 
     public final String getBodyForMethod(HTTPMethod method){
+        return getBodyForMethod(method, "");
+    }
+
+    public final String getBodyForMethod(HTTPMethod method, String params){
         switch(method){
             case GET:
                 return getGetBody();
+            case POST:
+                return getPostBody(params);
             default:
                 return "";
         }
@@ -52,16 +63,28 @@ public class Responder {
         statusGet =  controller.statusGet();
     }
 
+    public String getGetBody(){
+        return controller.bodyGet();
+    }
+
     public StatusCode getHeadStatus(){
         return statusHead;
     }
 
     private void setHeadStatus(){
-        statusHead = StatusCode.OK;
+        statusHead = controller.statusHead();
     }
 
-    public String getGetBody(){
-        return controller.bodyGet();
+    public StatusCode getPostStatus(){
+        return statusPost;
     }
 
+    private void setPostStatus(){
+        statusPost = controller.statusPost();
+        System.out.println(statusPost);
+    }
+
+    private String getPostBody(String params){
+        return controller.bodyPost(params);
+    }
 }

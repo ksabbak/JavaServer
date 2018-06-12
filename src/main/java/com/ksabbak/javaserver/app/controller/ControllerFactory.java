@@ -11,6 +11,10 @@ public class ControllerFactory {
         switch(path) {
             case "/coffee":
                 return new CoffeeController(methods);
+            case "/form":
+                return new FormController(methods);
+            case "/redirect":
+                return new RedirectController(methods);
             default:
                 return new Controller(methods);
         }

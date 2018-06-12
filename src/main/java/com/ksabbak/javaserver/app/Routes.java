@@ -18,6 +18,10 @@ public class Routes {
         map.put("/coffee", new ArrayList<HTTPMethod>(){{
             add(HTTPMethod.GET);
         }});
+        map.put("/form", new ArrayList<HTTPMethod>(){{
+            add(HTTPMethod.POST);
+        }});
+
 
         return Collections.unmodifiableMap(map);
     }
