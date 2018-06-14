@@ -64,10 +64,3 @@ public abstract class Controller {
         return methods;
     }
 }
-//HTTPMethod formattedMethod;
-//        try {
-//            formattedMethod = HTTPMethod.valueOf(method);
-//        } catch (IllegalArgumentException e) {
-//            e.printStackTrace();
-//            formattedMethod = HTTPMethod.UNKNOWN;
-//        }
