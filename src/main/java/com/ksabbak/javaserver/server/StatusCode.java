@@ -18,4 +18,5 @@ public enum StatusCode {
     public String statusAsString(){
         return Integer.toString(this.code) + " " + this.text;
     }
+
 }

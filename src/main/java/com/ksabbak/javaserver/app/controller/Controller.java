@@ -1,5 +1,6 @@
 package com.ksabbak.javaserver.app.controller;
 
+import com.ksabbak.javaserver.server.HTTPMethod;
 import com.ksabbak.javaserver.server.Response;
 import com.ksabbak.javaserver.server.StatusCode;
 
@@ -56,8 +57,17 @@ public abstract class Controller {
         Method[] subMethods = subclass.getClass().getDeclaredMethods();
         for ( Method subMethod: subMethods) {
             String name = subMethod.getName().toUpperCase();
-            methods.add(name);
+            if(HTTPMethod.verifyMethod(name) != HTTPMethod.UNKNOWN){
+                methods.add(name);
+            }
         }
         return methods;
     }
 }
+//HTTPMethod formattedMethod;
+//        try {
+//            formattedMethod = HTTPMethod.valueOf(method);
+//        } catch (IllegalArgumentException e) {
+//            e.printStackTrace();
+//            formattedMethod = HTTPMethod.UNKNOWN;
+//        }

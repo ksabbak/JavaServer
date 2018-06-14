@@ -29,7 +29,7 @@ public class RouterTest {
     @Test
     public void respondExistingPathExistingMethod(){
         Request responseData = new Request(HTTPMethod.GET, "/", "");
-        Response response = router.respond(responseData);
+        Response response = router.route(responseData);
         String expectedHeader = "HTTP/1.1 200 OK";
         assertEquals(expectedHeader, response.getHeader());
         assertEquals("", response.getBody());
@@ -38,7 +38,7 @@ public class RouterTest {
     @Test
     public void respondExistingPathMissingMethod(){
         Request request = new Request(HTTPMethod.UNKNOWN, "/", "");
-        Response response = router.respond(request);
+        Response response = router.route(request);
         String expectedHeader = "HTTP/1.1 405 Method Not Allowed";
         assertEquals(expectedHeader, response.getHeader());
         assertEquals("", response.getBody());
@@ -47,7 +47,7 @@ public class RouterTest {
     @Test
     public void respondMissingPathIrrelevantMethod(){
         Request request = new Request(HTTPMethod.GET, "/trollinthedungeon", "");
-        Response response = router.respond(request);
+        Response response = router.route(request);
         String expectedHeader = "HTTP/1.1 404 Not Found";
         assertEquals(expectedHeader, response.getHeader());
         assertEquals("", response.getBody());

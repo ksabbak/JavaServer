@@ -49,7 +49,7 @@ public class Main {
 
                 Router router = new Router();
                 Routable routable = new Routes(router);
-                Response httpResponse = router.respond(request);
+                Response httpResponse = router.route(request);
                 String formattedResponse = httpResponse.getResponse();
 
                 socket.getOutputStream().write(formattedResponse.getBytes("UTF-8"));

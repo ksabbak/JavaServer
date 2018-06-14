@@ -13,7 +13,7 @@ import java.util.Map;
 public class Router {
     public Map<String, Class> controllers = new HashMap<String, Class>();
 
-    public Response respond(Request request){
+    public Response route(Request request){
         HTTPMethod method = request.getMethod();
         String path = request.getPath();
         String params = request.getBody();
