@@ -1,4 +1,6 @@
 package com.ksabbak.javaserver.server;
+import com.ksabbak.javaserver.app.Routable;
+import com.ksabbak.javaserver.app.Routes;
 import com.ksabbak.javaserver.router.Router;
 
 import java.net.*;
@@ -42,11 +44,13 @@ public class Main {
                 }
 
                 requestParser.addBody(unparsedBody);
-                RequestData requestData = requestParser.parse();
+                Request request = requestParser.parse();
 
 
-                Response httpResponse = Router.respond(requestData);
-                String formattedResponse = httpResponse.formattedResponse();
+                Router router = new Router();
+                Routable routable = new Routes(router);
+                Response httpResponse = router.respond(request);
+                String formattedResponse = httpResponse.getResponse();
 
                 socket.getOutputStream().write(formattedResponse.getBytes("UTF-8"));
             }

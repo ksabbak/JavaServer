@@ -1,16 +1,21 @@
 package com.ksabbak.javaserver.app.controller;
 
-import com.ksabbak.javaserver.server.HTTPMethod;
+import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.server.StatusCode;
 
-import java.util.List;
 import java.util.Map;
 
 public class FormController extends Controller {
-    public FormController(List<HTTPMethod> methods){
-        super(methods);
+
+    @Override
+    public Response post(String params){
+        StatusCode status = StatusCode.OK;
+        String body = bodyPost(params);
+
+        return new Response.ResponseBuilder(status).body(body).build();
     }
 
-    public String bodyPost(String body){
+    private String bodyPost(String body){
         Map<String, String> params = super.stringToHashMap(body);
         String responseBody = "";
         for (Map.Entry<String, String> param : params.entrySet()) {
@@ -18,4 +23,5 @@ public class FormController extends Controller {
         }
         return responseBody;
     }
+
 }

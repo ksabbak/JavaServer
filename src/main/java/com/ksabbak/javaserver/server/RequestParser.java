@@ -23,8 +23,8 @@ public class RequestParser {
         }
     }
 
-    public RequestData parse(){
-        return new RequestData(method, path, body);
+    public Request parse(){
+        return new Request(method, path, body);
     }
 
     public void addBody(List<Integer> unparsedBody){

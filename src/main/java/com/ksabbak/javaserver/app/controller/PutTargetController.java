@@ -1,14 +1,16 @@
 package com.ksabbak.javaserver.app.controller;
 
-import com.ksabbak.javaserver.server.HTTPMethod;
+import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.server.StatusCode;
 
-import java.util.List;
 import java.util.Map;
 
 public class PutTargetController extends Controller {
-
-    public PutTargetController(List<HTTPMethod> methods){
-        super(methods);
+    @Override
+    public Response put(String params){
+        StatusCode status = StatusCode.OK;
+        String body = bodyPost(params);
+        return new Response.ResponseBuilder(status).body(body).build();
     }
 
     public String bodyPost(String body){
