@@ -11,6 +11,8 @@ public class Routes implements Routable {
         router.addRoute("/put-target", PutTargetController.class);
         router.addRoute("/method_options", MethodOptionsController.class);
         router.addRoute("/method_options2", MethodOptions2Controller.class);
+        router.addRoute("/file1", File1Controller.class);
+        router.addRoute("/text-file.txt", TextFileController.class);
     }
 
 }
