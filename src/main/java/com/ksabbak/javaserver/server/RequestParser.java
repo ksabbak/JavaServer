@@ -1,8 +1,5 @@
 package com.ksabbak.javaserver.server;
 
-import com.ksabbak.javaserver.app.controller.Controller;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class RequestParser {
@@ -19,15 +16,15 @@ public class RequestParser {
 
     public RequestParser(String unparsedHeader){
         text = unparsedHeader;
-        method = toHTTPMethod(pullElement(METHOD_POSITION));
+        method = HTTPMethod.verifyMethod(pullElement(METHOD_POSITION));
         path = pullElement(PATH_POSITION);
         if(text.contains(CONTENT_LENGTH)){
             contentLength = pullContentLength();
         }
     }
 
-    public RequestData parse(){
-        return new RequestData(method, path, body);
+    public Request parse(){
+        return new Request(method, path, body);
     }
 
     public void addBody(List<Integer> unparsedBody){
@@ -55,7 +52,6 @@ public class RequestParser {
     }
 
     private String parseBody(List<Integer> unparsedRequest){
-        int size = unparsedRequest.size();
         String parsedRequest = "";
         for (Integer charOfUnparsedRequest : unparsedRequest) {
             int simpleInt = charOfUnparsedRequest;
@@ -80,16 +76,5 @@ public class RequestParser {
             }
         }
         return 0;
-    }
-
-    private HTTPMethod toHTTPMethod(String method){
-        HTTPMethod formattedMethod;
-        try {
-            formattedMethod = HTTPMethod.valueOf(method);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            formattedMethod = HTTPMethod.UNKNOWN;
-        }
-        return formattedMethod;
     }
 }

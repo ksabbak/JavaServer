@@ -1,8 +1,9 @@
-package com.ksabbak.javaserver.app.controller;
+package com.ksabbak.javaserver.server;
 
 public enum StatusCode {
     OK(200, "OK"),
     NOT_FOUND(404, "Not Found"),
+    NOT_ALLOWED(405, "Method Not Allowed"),
     TEAPOT(418, "I'm a teapot");
 
 
@@ -17,4 +18,5 @@ public enum StatusCode {
     public String statusAsString(){
         return Integer.toString(this.code) + " " + this.text;
     }
+
 }

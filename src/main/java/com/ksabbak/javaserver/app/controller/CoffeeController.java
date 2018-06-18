@@ -1,19 +1,13 @@
 package com.ksabbak.javaserver.app.controller;
 
-import com.ksabbak.javaserver.server.HTTPMethod;
-
-import java.util.List;
+import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.server.StatusCode;
 
 public class CoffeeController extends Controller {
-    public CoffeeController(List<HTTPMethod> methods){
-        super(methods);
-    }
-
-    public StatusCode statusGet(){
-        return StatusCode.TEAPOT;
-    }
-
-    public String bodyGet(){
-        return "I'm a teapot";
+    @Override
+    public Response get(String params) {
+        StatusCode status = StatusCode.TEAPOT;
+        String body = "I'm a teapot";
+        return new Response.ResponseBuilder(status).body(body).build();
     }
 }

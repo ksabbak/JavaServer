@@ -1,54 +1,66 @@
 package com.ksabbak.javaserver.app.controller;
 
 import com.ksabbak.javaserver.server.HTTPMethod;
+import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.server.StatusCode;
 
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Controller {
-    protected List<HTTPMethod> methods;
+public abstract class Controller {
 
-    public Controller(){
-        this(new ArrayList<HTTPMethod>());
+    public Response get(String params){
+        StatusCode status = StatusCode.NOT_FOUND;
+        return new Response.ResponseBuilder(status).build();
     }
 
-    public Controller(List<HTTPMethod> methods){
-        this.methods = methods;
+    public Response head(String params){
+        StatusCode status = StatusCode.NOT_FOUND;
+        return new Response.ResponseBuilder(status).build();
     }
 
-    public final List<HTTPMethod> getMethods(){
-        return methods;
+    public Response options(String params){
+        StatusCode status = StatusCode.NOT_ALLOWED;
+        return new Response.ResponseBuilder(status).build();
     }
 
-    public StatusCode statusGet(){
-        return StatusCode.OK;
+    public Response post(String params){
+        StatusCode status = StatusCode.NOT_ALLOWED;
+        return new Response.ResponseBuilder(status).build();
     }
 
-    public String bodyGet(){
-        return "";
+    public Response put(String params){
+        StatusCode status = StatusCode.NOT_ALLOWED;
+        return new Response.ResponseBuilder(status).build();
     }
 
-    public StatusCode statusHead(){
-        return StatusCode.OK;
-    }
-
-    public StatusCode statusPost(){
-        return StatusCode.OK;
-    }
-
-    public String bodyPost(String body){
-        return "";
+    public Response unknown(String params){
+        StatusCode status = StatusCode.NOT_ALLOWED;
+        return new Response.ResponseBuilder(status).build();
     }
 
     protected Map<String, String> stringToHashMap(String unparsedParams){
         Map<String, String> params = new HashMap<String, String>();
         String[] splitParams = unparsedParams.split("&");
-        for(int i=0; i < splitParams.length; i++){
-            String[] keyValuePair = splitParams[i].split("=");
+        for(String splitParam : splitParams){
+            String[] keyValuePair = splitParam.split("=");
             params.put(keyValuePair[0], keyValuePair[1]);
         }
         return params;
+    }
+
+    protected List<String> getOptions(Controller subclass){
+        List<String> methods = new ArrayList<String>();
+        Method[] subMethods = subclass.getClass().getDeclaredMethods();
+        for ( Method subMethod: subMethods) {
+            String name = subMethod.getName().toUpperCase();
+            if(HTTPMethod.verifyMethod(name) != HTTPMethod.UNKNOWN){
+                methods.add(name);
+            }
+        }
+        return methods;
     }
 }

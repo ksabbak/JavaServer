@@ -1,33 +1,16 @@
 package com.ksabbak.javaserver.app;
-import com.ksabbak.javaserver.server.HTTPMethod;
+import com.ksabbak.javaserver.app.controller.*;
+import com.ksabbak.javaserver.router.Router;
 
-import java.util.*;
-
-public class Routes {
-    private static final Map<String, List<HTTPMethod>> routes = initMap();
-
-    private static Map<String, List<HTTPMethod>> initMap() {
-        Map<String, List<HTTPMethod>> map = new HashMap<String, List<HTTPMethod>>();
-        map.put("/", new ArrayList<HTTPMethod>() {{
-            add(HTTPMethod.GET);
-            add(HTTPMethod.HEAD);
-        }});
-        map.put("/tea", new ArrayList<HTTPMethod>() {{
-            add(HTTPMethod.GET);
-        }});
-        map.put("/coffee", new ArrayList<HTTPMethod>(){{
-            add(HTTPMethod.GET);
-        }});
-        map.put("/form", new ArrayList<HTTPMethod>(){{
-            add(HTTPMethod.POST);
-        }});
-
-
-        return Collections.unmodifiableMap(map);
-    }
-
-    public static List<HTTPMethod> methodsForPath(String path){
-        return routes.getOrDefault(path, new ArrayList<HTTPMethod>());
+public class Routes implements Routable {
+    public Routes(Router router){
+        router.addRoute("/", IndexController.class);
+        router.addRoute("/tea", TeaController.class);
+        router.addRoute("/coffee", CoffeeController.class);
+        router.addRoute("/form", FormController.class);
+        router.addRoute("/put-target", PutTargetController.class);
+        router.addRoute("/method_options", MethodOptionsController.class);
+        router.addRoute("/method_options2", MethodOptions2Controller.class);
     }
 
 }

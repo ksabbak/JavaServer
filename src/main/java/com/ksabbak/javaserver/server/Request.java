@@ -1,11 +1,11 @@
 package com.ksabbak.javaserver.server;
 
-public class RequestData {
+public class Request {
     private HTTPMethod method;
     private String path;
     private String body;
 
-    public RequestData(HTTPMethod method, String path, String body){
+    public Request(HTTPMethod method, String path, String body){
         this.method = method;
         this.path = path;
         this.body = body;

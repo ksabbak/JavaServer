@@ -5,23 +5,22 @@ import com.ksabbak.javaserver.server.StatusCode;
 
 import java.util.Map;
 
-public class FormController extends Controller {
-
+public class PutTargetController extends Controller {
     @Override
-    public Response post(String params){
+    public Response put(String params){
         StatusCode status = StatusCode.OK;
         String body = bodyPost(params);
-
         return new Response.ResponseBuilder(status).body(body).build();
     }
 
-    private String bodyPost(String body){
+    public String bodyPost(String body){
         Map<String, String> params = super.stringToHashMap(body);
-        String responseBody = "";
+        String responseBody = "My=";
         for (Map.Entry<String, String> param : params.entrySet()) {
-            responseBody += param.getKey() + "=" + param.getValue() + "\n";
+            if (param.getKey() == "My") {
+                responseBody += param.getKey() + "=" + param.getValue();
+            }
         }
         return responseBody;
     }
-
 }
