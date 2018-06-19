@@ -11,6 +11,7 @@ public class Routes implements Routable {
         router.addRoute("/put-target", PutTargetController.class);
         router.addRoute("/method_options", MethodOptionsController.class);
         router.addRoute("/method_options2", MethodOptions2Controller.class);
+        router.addRoute("/redirect", RedirectController.class);
     }
 
 }

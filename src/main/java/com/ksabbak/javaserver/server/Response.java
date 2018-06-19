@@ -33,6 +33,7 @@ public class Response {
         private String contentLength = "";
         private String allow = "";
         private String body = "";
+        private String location = "";
 
         public ResponseBuilder(StatusCode status){
             statusLine = startHeader(status);
@@ -56,11 +57,17 @@ public class Response {
             return this;
         }
 
+        public ResponseBuilder location(String location){
+            this.location = "Location: " + location;
+            return this;
+        }
+
         protected String getHeader(){
             String fullHeader = "";
             String[] headerLines = new String[] {
                     statusLine,
                     allow,
+                    location,
                     contentLength
             };
 

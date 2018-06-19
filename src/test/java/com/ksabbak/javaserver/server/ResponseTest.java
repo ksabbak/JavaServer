@@ -18,7 +18,14 @@ public class ResponseTest {
         Response response = new Response.ResponseBuilder(StatusCode.OK).body("Hello World").build();
         assertEquals(expectedResponse, response.getResponse());
         assertTrue(response.getHeader().contains("Content-Length: 11"));
+        assertEquals("Hello World", response.getBody());
     }
 
+    @Test
+    public void formattedResponseWithRedirect(){
+        String expectedResponse = "HTTP/1.1 302 Found\nLocation: /redirect\r\n\r\n";
+        Response response = new Response.ResponseBuilder(StatusCode.FOUND).location("/redirect").build();
+        assertEquals(expectedResponse, response.getResponse());
+    }
 
 }

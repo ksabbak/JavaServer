@@ -2,6 +2,7 @@ package com.ksabbak.javaserver.server;
 
 public enum StatusCode {
     OK(200, "OK"),
+    FOUND(302, "Found"),
     NOT_FOUND(404, "Not Found"),
     NOT_ALLOWED(405, "Method Not Allowed"),
     TEAPOT(418, "I'm a teapot");
