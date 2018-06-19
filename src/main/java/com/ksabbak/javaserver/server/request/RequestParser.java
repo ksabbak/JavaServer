@@ -1,4 +1,6 @@
-package com.ksabbak.javaserver.server;
+package com.ksabbak.javaserver.server.request;
+
+import com.ksabbak.javaserver.server.HTTPMethod;
 
 import java.util.List;
 

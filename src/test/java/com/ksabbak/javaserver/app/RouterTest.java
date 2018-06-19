@@ -3,7 +3,7 @@ package com.ksabbak.javaserver.app;
 import com.ksabbak.javaserver.app.controller.NoPathController;
 import com.ksabbak.javaserver.router.Router;
 import com.ksabbak.javaserver.server.HTTPMethod;
-import com.ksabbak.javaserver.server.Request;
+import com.ksabbak.javaserver.server.request.Request;
 import com.ksabbak.javaserver.server.Response;
 import org.junit.Before;
 import org.junit.Test;
