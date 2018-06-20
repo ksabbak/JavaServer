@@ -3,7 +3,7 @@ package com.ksabbak.javaserver.server;
 import com.ksabbak.javaserver.app.Routable;
 import com.ksabbak.javaserver.app.Routes;
 import com.ksabbak.javaserver.router.Router;
-import com.ksabbak.javaserver.server.request.RequestHandler;
+import com.ksabbak.javaserver.server.request.HTTPConnection;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,8 +20,8 @@ public class Server {
                 new ServerSocket(portNumber);
         while (true) {
             Socket socket = serverSocket.accept();
-            Runnable requestHandler = new RequestHandler(socket, router);
-            executorService.execute(requestHandler);
+            Runnable connection = new HTTPConnection(socket, router);
+            executorService.execute(connection);
         }
     }
 }

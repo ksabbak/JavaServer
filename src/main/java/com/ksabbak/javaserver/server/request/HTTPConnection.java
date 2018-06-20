@@ -2,6 +2,7 @@ package com.ksabbak.javaserver.server.request;
 
 import com.ksabbak.javaserver.router.Router;
 import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.server.ResponseFormatter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,13 +10,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class RequestHandler implements Runnable{
+public class HTTPConnection implements Runnable{
     private Socket socket;
     private Router router;
     private InputStream inputStream;
 
 
-    public RequestHandler(Socket socket, Router router) {
+    public HTTPConnection(Socket socket, Router router) {
         this.socket = socket;
         this.router = router;
     }
@@ -26,7 +27,7 @@ public class RequestHandler implements Runnable{
 
             Request request = new RequestReader(in).read();
             Response httpResponse = router.route(request);
-            String formattedResponse = httpResponse.getResponse();
+            String formattedResponse = ResponseFormatter.format(httpResponse);
 
             writeResponse(formattedResponse, socket);
         try {
