@@ -1,10 +1,7 @@
 package com.ksabbak.javaserver.server;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Response {
     private StatusCode statusCode;
@@ -27,7 +24,7 @@ public class Response {
 
     public static class ResponseBuilder {
         private final StatusCode status;
-        private Map<String, String> headers = new HashMap<String, String>();
+        private Map<String, String> headers = new LinkedHashMap<String, String>();
         private String body = "";
 
         public ResponseBuilder(StatusCode status){
