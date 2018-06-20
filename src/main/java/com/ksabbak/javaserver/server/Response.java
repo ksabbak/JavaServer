@@ -1,41 +1,34 @@
 package com.ksabbak.javaserver.server;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.*;
 
 public class Response {
-    private final String CRLF = "\r\n\r\n";
-
-    private String header;
+    private StatusCode statusCode;
+    private Map<String, String> headers;
     private String body;
 
     private Response(ResponseBuilder builder){
-        this.header = builder.getHeader();
         this.body = builder.body;
-    }
-
-    public String getResponse(){
-        return header + CRLF + body;
-    }
-
-    public String getHeader(){
-        return header;
+        this.headers = builder.headers;
+        this.statusCode = builder.status;
     }
 
     public String getBody(){
         return body;
     }
 
-    public static class ResponseBuilder {
-        private final String NEW_LINE = "\n";
+    public StatusCode getStatus() { return statusCode; }
 
-        private final String statusLine;
-        private String contentLength = "";
-        private String allow = "";
+    public Map<String, String> getHeaders() { return Collections.unmodifiableMap(headers); }
+
+    public static class ResponseBuilder {
+        private final StatusCode status;
+        private Map<String, String> headers = new LinkedHashMap<String, String>();
         private String body = "";
 
         public ResponseBuilder(StatusCode status){
-            statusLine = startHeader(status);
+            this.status = status;
         }
 
         public Response build(){
@@ -44,47 +37,25 @@ public class Response {
 
         public ResponseBuilder body(String body){
             this.body = body;
-            contentLength = contentLength(body);
+            contentLength(body);
 
             return this;
         }
 
         public ResponseBuilder options(List<String> allowedMethods){
-            String allow = "Allow: ";
             String methods = String.join(", ", allowedMethods);
-            this.allow = allow + methods;
+            headers.put("Allow", methods);
             return this;
         }
 
-        protected String getHeader(){
-            String fullHeader = "";
-            String[] headerLines = new String[] {
-                    statusLine,
-                    allow,
-                    contentLength
-            };
-
-            for (String line : headerLines) {
-                if(!line.isEmpty()) {
-                    fullHeader += (line + NEW_LINE);
-                }
-            }
-
-            return fullHeader.trim();
-        }
-
-        private String startHeader(StatusCode status){
-            return "HTTP/1.1 " + status.statusAsString();
-        }
-
-        private String contentLength(String body){
+        private void contentLength(String body){
             byte[] bytes = new byte[0];
             try {
                 bytes = body.getBytes("UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            return "Content-Length: " + bytes.length;
+            headers.put("Content-Length", Integer.toString(bytes.length));
         }
 
 
