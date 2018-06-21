@@ -3,7 +3,7 @@ package com.ksabbak.javaserver.router;
 import com.ksabbak.javaserver.app.controller.Controller;
 import com.ksabbak.javaserver.app.controller.NoPathController;
 import com.ksabbak.javaserver.server.HTTPMethod;
-import com.ksabbak.javaserver.server.Request;
+import com.ksabbak.javaserver.server.request.Request;
 import com.ksabbak.javaserver.server.Response;
 
 import java.util.HashMap;
