@@ -10,20 +10,15 @@ import static org.junit.Assert.*;
 public class ResponseTest {
     @Test
     public void responseTestSimple(){
-        String expectedResponse = "HTTP/1.1 200 OK\r\n\r\n";
         Response response = new Response.ResponseBuilder(StatusCode.OK).build();
         assertEquals(StatusCode.OK, response.getStatus());
-//        assertEquals(expectedResponse, response.getResponse());
     }
 
     @Test
     public void responseTestWithBody(){
-        String expectedResponse = "HTTP/1.1 200 OK\nContent-Length: 11\r\n\r\nHello World";
         Response response = new Response.ResponseBuilder(StatusCode.OK).body("Hello World").build();
         assertEquals(StatusCode.OK, response.getStatus());
         assertEquals("11", response.getHeaders().get("Content-Length"));
-//        assertEquals(expectedResponse, response.getResponse());
-//        assertTrue(response.getHeader().contains("Content-Length: 11"));
     }
 
     @Test
@@ -39,5 +34,12 @@ public class ResponseTest {
         assertEquals("GET, HEAD, OPTIONS, DELETE", response.getHeaders().get("Allow"));
     }
 
+    @Test
+    public void formattedResponseWithRedirect(){
+        String expectedResponse = "HTTP/1.1 302 Found\nLocation: /redirect\r\n\r\n";
+        Response response = new Response.ResponseBuilder(StatusCode.FOUND).location("/redirect").build();
+        assertEquals(StatusCode.FOUND, response.getStatus());
+        assertEquals("/redirect", response.getHeaders().get("Location"));
+    }
 
 }

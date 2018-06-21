@@ -48,6 +48,11 @@ public class Response {
             return this;
         }
 
+        public ResponseBuilder location(String location){
+            headers.put("Location", location);
+            return this;
+        }
+
         private void contentLength(String body){
             byte[] bytes = new byte[0];
             try {
