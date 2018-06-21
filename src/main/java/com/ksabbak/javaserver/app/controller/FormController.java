@@ -2,13 +2,14 @@ package com.ksabbak.javaserver.app.controller;
 
 import com.ksabbak.javaserver.server.Response;
 import com.ksabbak.javaserver.server.StatusCode;
+import com.ksabbak.javaserver.storage.Persistable;
 
 import java.util.Map;
 
 public class FormController extends Controller {
 
     @Override
-    public Response post(String params){
+    public Response post(String params, Persistable storage){
         StatusCode status = StatusCode.OK;
         String body = bodyPost(params);
 

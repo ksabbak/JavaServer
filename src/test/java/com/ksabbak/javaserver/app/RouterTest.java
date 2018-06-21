@@ -6,6 +6,8 @@ import com.ksabbak.javaserver.server.HTTPMethod;
 import com.ksabbak.javaserver.server.StatusCode;
 import com.ksabbak.javaserver.server.request.Request;
 import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.storage.Persistable;
+import com.ksabbak.javaserver.storage.Store;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +18,8 @@ public class RouterTest {
 
     @Before
     public void setup(){
-        router = new Router();
+        Persistable storage = new Store();
+        router = new Router(storage);
         Routable routable = new Routes(router);
     }
 
