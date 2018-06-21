@@ -12,6 +12,8 @@ public class Routes implements Routable {
         router.addRoute("/method_options", MethodOptionsController.class);
         router.addRoute("/method_options2", MethodOptions2Controller.class);
         router.addRoute("/redirect", RedirectController.class);
+        router.addRoute("/cat-form", CatFormController.class);
+        router.addRoute("/cat-form/data", CatFormDataController.class);
     }
 
 }

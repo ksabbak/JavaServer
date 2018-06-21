@@ -2,6 +2,7 @@ package com.ksabbak.javaserver.server;
 
 public enum StatusCode {
     OK(200, "OK"),
+    CREATED(201, "Created"),
     FOUND(302, "Found"),
     NOT_FOUND(404, "Not Found"),
     NOT_ALLOWED(405, "Method Not Allowed"),
