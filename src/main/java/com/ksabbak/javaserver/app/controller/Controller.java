@@ -3,6 +3,7 @@ package com.ksabbak.javaserver.app.controller;
 import com.ksabbak.javaserver.server.HTTPMethod;
 import com.ksabbak.javaserver.server.Response;
 import com.ksabbak.javaserver.server.StatusCode;
+import com.ksabbak.javaserver.storage.Persistable;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -12,32 +13,37 @@ import java.util.Map;
 
 public abstract class Controller {
 
-    public Response get(String params){
+    public Response get(String params, Persistable storage){
         StatusCode status = StatusCode.NOT_FOUND;
         return new Response.ResponseBuilder(status).build();
     }
 
-    public Response head(String params){
+    public Response head(String params, Persistable storage){
         StatusCode status = StatusCode.NOT_FOUND;
         return new Response.ResponseBuilder(status).build();
     }
 
-    public Response options(String params){
+    public Response options(String params, Persistable storage){
         StatusCode status = StatusCode.NOT_ALLOWED;
         return new Response.ResponseBuilder(status).build();
     }
 
-    public Response post(String params){
+    public Response post(String params, Persistable storage){
         StatusCode status = StatusCode.NOT_ALLOWED;
         return new Response.ResponseBuilder(status).build();
     }
 
-    public Response put(String params){
+    public Response put(String params, Persistable storage){
         StatusCode status = StatusCode.NOT_ALLOWED;
         return new Response.ResponseBuilder(status).build();
     }
 
-    public Response unknown(String params){
+    public Response delete(String params, Persistable storage){
+        StatusCode status = StatusCode.NOT_ALLOWED;
+        return new Response.ResponseBuilder(status).build();
+    }
+
+    public Response unknown(String params, Persistable storage){
         StatusCode status = StatusCode.NOT_ALLOWED;
         return new Response.ResponseBuilder(status).build();
     }
@@ -47,6 +53,7 @@ public abstract class Controller {
         String[] splitParams = unparsedParams.split("&");
         for(String splitParam : splitParams){
             String[] keyValuePair = splitParam.split("=");
+
             params.put(keyValuePair[0], keyValuePair[1]);
         }
         return params;

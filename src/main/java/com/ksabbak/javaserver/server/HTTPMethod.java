@@ -1,7 +1,7 @@
 package com.ksabbak.javaserver.server;
 
 public enum HTTPMethod {
-    GET, HEAD, POST, PUT, OPTIONS, UNKNOWN;
+    GET, HEAD, POST, PUT, OPTIONS, DELETE, UNKNOWN;
 
     public static HTTPMethod verifyMethod(String potentialMethod){
         try {

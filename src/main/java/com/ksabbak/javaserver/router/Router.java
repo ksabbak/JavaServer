@@ -5,6 +5,7 @@ import com.ksabbak.javaserver.app.controller.NoPathController;
 import com.ksabbak.javaserver.server.HTTPMethod;
 import com.ksabbak.javaserver.server.request.Request;
 import com.ksabbak.javaserver.server.Response;
+import com.ksabbak.javaserver.storage.Persistable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,11 @@ import java.util.Map;
 
 public class Router {
     public Map<String, Class> controllers = new HashMap<String, Class>();
+    public Persistable storage;
 
+    public Router(Persistable storage){
+        this.storage = storage;
+    }
     public Response route(Request request){
         HTTPMethod method = request.getMethod();
         String path = request.getPath();
@@ -58,17 +63,20 @@ public class Router {
             case OPTIONS:
                 responseMethod = controller::options;
                 break;
+            case DELETE:
+                responseMethod = controller::delete;
+                break;
             default:
                 responseMethod = controller::unknown;
         }
-        return responseMethod.handle(params);
+        return responseMethod.handle(params, storage);
     }
 
 
 
     @FunctionalInterface
     interface ResponseMethod{
-        Response handle(String params);
+        Response handle(String params, Persistable storage);
     }
 
 }
