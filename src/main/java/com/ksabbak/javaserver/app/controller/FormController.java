@@ -22,7 +22,7 @@ public class FormController extends Controller {
         for (Map.Entry<String, String> param : params.entrySet()) {
             responseBody += param.getKey() + "=" + param.getValue() + "\n";
         }
-        return responseBody;
+        return responseBody.trim();
     }
 
 }

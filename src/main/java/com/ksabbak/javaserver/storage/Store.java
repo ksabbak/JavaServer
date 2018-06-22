@@ -11,37 +11,36 @@ public class Store implements Persistable {
     }
 
     @Override
-    synchronized public String create(String key) throws Exception {
+    synchronized public String create(String key) throws KeyTakenException{
         return create(key, "");
     }
 
     @Override
-    synchronized public String create(String key, String value) throws Exception {
-        if (store.get(key) != null) throw new Exception();
+    synchronized public String create(String key, String value) throws KeyTakenException {
+        if (store.get(key) != null) throw new KeyTakenException();
         store.put(key, value);
         return key;
     }
 
     @Override
-    synchronized public String update(String key, String value) throws Exception{
-        if (store.get(key) == null) throw new Exception();
+    synchronized public String update(String key, String value) throws KeyNotFoundException{
+        if (store.get(key) == null) throw new KeyNotFoundException();
         store.put(key, value);
         return key;
     }
 
     @Override
-    public String read(String key) throws Exception{
+    public String read(String key) throws KeyNotFoundException{
         String value = store.get(key);
-        if (value == null) throw new Exception();
+        if (value == null) throw new KeyNotFoundException();
         return value;
     }
 
     @Override
-    synchronized public String delete(String key) throws Exception{
+    synchronized public void delete(String key) throws KeyNotFoundException{
         String value = store.remove(key);
         if (value == null){
-            throw new Exception();
+            throw new KeyNotFoundException();
         }
-        return value;
     }
 }

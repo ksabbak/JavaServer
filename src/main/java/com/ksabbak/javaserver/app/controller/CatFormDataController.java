@@ -2,6 +2,7 @@ package com.ksabbak.javaserver.app.controller;
 
 import com.ksabbak.javaserver.server.Response;
 import com.ksabbak.javaserver.server.StatusCode;
+import com.ksabbak.javaserver.storage.KeyNotFoundException;
 import com.ksabbak.javaserver.storage.Persistable;
 
 import java.util.Map;
@@ -16,8 +17,9 @@ public class CatFormDataController extends Controller {
             String body = key + "=" + value;
             StatusCode status = StatusCode.OK;
             return new Response.ResponseBuilder(status).body(body).build();
-        }catch (Exception e) {
+        }catch (KeyNotFoundException e) {
             System.out.println("Can't find key: " + key);
+            e.printStackTrace();
             return super.get(params, storage);
         }
     }
@@ -29,13 +31,13 @@ public class CatFormDataController extends Controller {
         Map<String, String> formattedParams = super.stringToHashMap(params);
 
         for(Map.Entry<String, String> pair : formattedParams.entrySet()) {
-            System.out.println(pair.getKey());
             if (pair.getKey().equals("data")) {
                 try {
                     storage.update(pair.getKey(), pair.getValue());
                     return new Response.ResponseBuilder(statusCode).build();
-                } catch (Exception e) {
+                } catch (KeyNotFoundException e) {
                     System.out.println("Key doesn't exist; cannot update error");
+                    e.printStackTrace();
                     statusCode = StatusCode.CONFLICT;
                 }
             }
@@ -49,8 +51,9 @@ public class CatFormDataController extends Controller {
             storage.delete("data");
             StatusCode statusCode = StatusCode.OK;
             return new Response.ResponseBuilder(statusCode).build();
-        } catch (Exception e) {
+        } catch (KeyNotFoundException e) {
             System.out.println("Key doesn't exist; cannot delete error");
+            e.printStackTrace();
         }
 
         return super.delete(params, storage);

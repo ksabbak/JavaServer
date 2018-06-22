@@ -14,12 +14,12 @@ public class PutTargetController extends Controller {
         return new Response.ResponseBuilder(status).body(body).build();
     }
 
-    public String bodyPost(String body){
+    private String bodyPost(String body){
         Map<String, String> params = super.stringToHashMap(body);
         String responseBody = "My=";
         for (Map.Entry<String, String> param : params.entrySet()) {
-            if (param.getKey() == "My") {
-                responseBody += param.getKey() + "=" + param.getValue();
+            if (param.getKey().equals("\"My\"")) {
+                responseBody += param.getValue();
             }
         }
         return responseBody;
