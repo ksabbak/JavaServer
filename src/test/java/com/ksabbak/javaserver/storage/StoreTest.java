@@ -3,6 +3,8 @@ package com.ksabbak.javaserver.storage;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 public class StoreTest {
@@ -17,8 +19,8 @@ public class StoreTest {
     public void createOnlyKeyNoConflictTest() {
         try {
             store.create("Hello");
-            assertEquals("", store.read("Hello"));
-        } catch (KeyTakenException | KeyNotFoundException e) {
+            assertEquals("", store.read("Hello").get());
+        } catch (KeyTakenException e) {
             e.printStackTrace();
             assertTrue(false);
         }
@@ -39,8 +41,8 @@ public class StoreTest {
     public void createKeyValueNoConflict() {
         try {
             store.create("Hello", "world");
-            assertEquals("world", store.read("Hello"));
-        } catch (KeyTakenException | KeyNotFoundException e) {
+            assertEquals("world", store.read("Hello").get());
+        } catch (KeyTakenException e) {
             e.printStackTrace();
             assertTrue(false);
         }
@@ -61,7 +63,7 @@ public class StoreTest {
         try {
             store.create("Hello", "world");
             store.update("Hello", "goodbye");
-            assertEquals("goodbye", store.read("Hello"));
+            assertEquals("goodbye", store.read("Hello").get());
         } catch (KeyTakenException | KeyNotFoundException e) {
             e.printStackTrace();
             assertTrue(false);
@@ -81,19 +83,16 @@ public class StoreTest {
     public void readExistingTest() {
         try {
             store.create("Hello", "world");
-            assertEquals("world", store.read("Hello"));
-        } catch (KeyTakenException | KeyNotFoundException e) {
+            assertEquals("world", store.read("Hello").get());
+        } catch (KeyTakenException e) {
             e.printStackTrace();
             assertTrue(false);
         }
     }
 
     public void readNothingTest() {
-        try {
-            store.read("Hello");
-        } catch (KeyNotFoundException e) {
-            assertTrue(true);
-        }
+           Optional<String> value =  store.read("Hello");
+           assertFalse(value.isPresent());
     }
 
     @Test

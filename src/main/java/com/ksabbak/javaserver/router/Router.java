@@ -29,9 +29,11 @@ public class Router {
         try {
             controller = controllerType.newInstance();
         } catch (InstantiationException e) {
+            e.printStackTrace();
             System.out.println("Instantiation");
             controller = new NoPathController();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
             System.out.println("IllegalAccess");
             controller = new NoPathController();
         }

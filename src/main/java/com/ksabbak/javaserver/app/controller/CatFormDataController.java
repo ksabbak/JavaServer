@@ -6,22 +6,18 @@ import com.ksabbak.javaserver.storage.KeyNotFoundException;
 import com.ksabbak.javaserver.storage.Persistable;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class CatFormDataController extends Controller {
 
     @Override
     public Response get(String params, Persistable storage) {
         String key = "data";
-        try{
-            String value = storage.read(key);
-            String body = key + "=" + value;
-            StatusCode status = StatusCode.OK;
-            return new Response.ResponseBuilder(status).body(body).build();
-        }catch (KeyNotFoundException e) {
-            System.out.println("Can't find key: " + key);
-            e.printStackTrace();
-            return super.get(params, storage);
-        }
+        return storage.read(key)
+                .map(val -> key + "=" + val)
+                .map(body -> new Response.ResponseBuilder(StatusCode.OK).body(body))
+                .map(builder -> builder.build())
+                .orElse(super.get(params, storage));
     }
 
     @Override

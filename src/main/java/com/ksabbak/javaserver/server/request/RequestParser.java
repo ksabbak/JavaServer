@@ -16,12 +16,14 @@ public class RequestParser {
     private int contentLength = 0;
     private String body = "";
 
-    public RequestParser(String unparsedHeader){
+    public RequestParser(String unparsedHeader) {
         text = unparsedHeader;
-        method = HTTPMethod.verifyMethod(pullElement(METHOD_POSITION));
-        path = pullElement(PATH_POSITION);
-        if(text.contains(CONTENT_LENGTH)){
-            contentLength = pullContentLength();
+        if (!text.isEmpty()) {
+            method = HTTPMethod.verifyMethod(pullElement(METHOD_POSITION));
+            path = pullElement(PATH_POSITION);
+            if (text.contains(CONTENT_LENGTH)) {
+                contentLength = pullContentLength();
+            }
         }
     }
 
