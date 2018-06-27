@@ -6,49 +6,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestReader {
-    
-    private BufferedReader in;
-    public RequestReader(BufferedReader in){
-        this.in = in;
-    }
 
-    public Request read(){
-        String unparsedHeader = readHeader();
-        RequestParser requestParser = new RequestParser(unparsedHeader);
-        List<Integer> unparsedBody = readBody(requestParser.getContentLength());
-        requestParser.addBody(unparsedBody);
-        return requestParser.parse();
-    }
-
-    private String readHeader(){
+    public static String readHeader(BufferedReader in){
         String unparsedHeader = "";
         String line;
         Boolean blankLine = false;
 
-        while (!blankLine && ((line = readLine()) != null)) {
+        while (!blankLine && ((line = readLine(in)) != null)) {
             unparsedHeader += line + "\n";
             if (line.trim().isEmpty()) {
                 blankLine = true;
             }
         }
-        
-        return unparsedHeader;
+
+        return unparsedHeader.trim();
     }
-    
-    
-    private List<Integer> readBody(int contentLength){
+
+
+    public static List<Integer> readBody(BufferedReader in, int contentLength){
         List<Integer> unparsedBody = new ArrayList<Integer>();
         Integer character;
         int length = 0;
 
-        while ((length < contentLength) && ((character = readChar()) != -1)) {
+        while ((length < contentLength) && ((character = readChar(in)) != -1)) {
             unparsedBody.add(character);
             length++;
         }
         return unparsedBody;
     }
-    
-    private String readLine(){
+
+
+    private static String readLine(BufferedReader in){
         try {
             return in.readLine();
         } catch (IOException e) {
@@ -58,7 +46,7 @@ public class RequestReader {
         }
     }
 
-    private int readChar(){
+    private static int readChar(BufferedReader in){
         try {
             return in.read();
         } catch (IOException e) {
