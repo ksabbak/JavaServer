@@ -2,6 +2,7 @@ package com.ksabbak.javaserver.storage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Store implements Persistable {
     private Map<String, String> store;
@@ -30,10 +31,9 @@ public class Store implements Persistable {
     }
 
     @Override
-    public String read(String key) throws KeyNotFoundException{
+    public Optional<String> read(String key){
         String value = store.get(key);
-        if (value == null) throw new KeyNotFoundException();
-        return value;
+        return Optional.ofNullable(value);
     }
 
     @Override

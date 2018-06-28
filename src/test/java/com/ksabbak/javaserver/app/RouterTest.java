@@ -11,6 +11,9 @@ import com.ksabbak.javaserver.storage.Store;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+
 import static org.junit.Assert.*;
 
 public class RouterTest {
@@ -32,15 +35,21 @@ public class RouterTest {
 
     @Test
     public void respondExistingPathExistingMethod(){
-        Request responseData = new Request(HTTPMethod.GET, "/", "");
+        String header = "GET / HTTP/1.1";
+        BufferedReader in = new BufferedReader(new StringReader(header));
+        Request responseData = new Request.RequestParser(in).parse();
+
         Response response = router.route(responseData);
         assertEquals(StatusCode.OK, response.getStatus());
         assertEquals("", response.getBody());
     }
 
     @Test
-    public void respondExistingPathMissingMethod(){
-        Request request = new Request(HTTPMethod.UNKNOWN, "/", "");
+    public void respondExistingPathInvalidMethod(){
+        String header = "BREAK / HTTP/1.1";
+        BufferedReader in = new BufferedReader(new StringReader(header));
+        Request request = new Request.RequestParser(in).parse();
+
         Response response = router.route(request);
         assertEquals(StatusCode.NOT_ALLOWED, response.getStatus());
         assertEquals("", response.getBody());
@@ -48,7 +57,10 @@ public class RouterTest {
 
     @Test
     public void respondMissingPathIrrelevantMethod(){
-        Request request = new Request(HTTPMethod.GET, "/trollinthedungeon", "");
+        String header = "GET /trollinthedungeon HTTP/1.1";
+        BufferedReader in = new BufferedReader(new StringReader(header));
+        Request request = new Request.RequestParser(in).parse();
+
         Response response = router.route(request);
         assertEquals(StatusCode.NOT_FOUND, response.getStatus());
         assertEquals("", response.getBody());

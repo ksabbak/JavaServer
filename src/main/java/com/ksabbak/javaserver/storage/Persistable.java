@@ -1,5 +1,7 @@
 package com.ksabbak.javaserver.storage;
 
+import java.util.Optional;
+
 public interface Persistable {
 
     String create(String key) throws KeyTakenException;
@@ -8,7 +10,7 @@ public interface Persistable {
 
     String update(String key, String value) throws KeyNotFoundException;
 
-    String read(String key) throws KeyNotFoundException;
+    Optional<String> read(String key);
 
     void delete(String key) throws KeyNotFoundException;
 }
