@@ -20,7 +20,7 @@ After getting JDK SE 8 and Gradle working, navigate to the directory and run
 $ gradle run
 ```
 
-And you're set. Your server will now accept requests sent to [port 5000](http://localhost:5000/)
+And you're set. Once it hits 75% EXECUTING, this means the server is ready and waiting. Your server will now accept requests sent to [port 5000](http://localhost:5000/)
 
 ## Running the tests
 
