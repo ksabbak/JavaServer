@@ -37,6 +37,7 @@ public class Router {
             System.out.println("IllegalAccess");
             controller = new NoPathController();
         }
+
         Response response = getResponseForMethod(method, controller, params);
 
         return response;
