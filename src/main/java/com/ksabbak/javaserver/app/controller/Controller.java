@@ -24,8 +24,9 @@ public abstract class Controller {
     }
 
     public Response options(String params, Persistable storage){
-        StatusCode status = StatusCode.NOT_ALLOWED;
-        return new Response.ResponseBuilder(status).build();
+        StatusCode status = StatusCode.OK;
+        List<String> options = getOptions(this);
+        return new Response.ResponseBuilder(status).options(options).build();
     }
 
     public Response post(String params, Persistable storage){
@@ -49,18 +50,24 @@ public abstract class Controller {
     }
 
     protected Map<String, String> stringToHashMap(String unparsedParams){
-        Map<String, String> params = new HashMap<String, String>();
-        String[] splitParams = unparsedParams.split("&");
-        for(String splitParam : splitParams){
-            String[] keyValuePair = splitParam.split("=");
+        if(!unparsedParams.isEmpty()) {
+            Map<String, String> params = new HashMap<String, String>();
+            String[] splitParams = unparsedParams.split("&");
+            for (String splitParam : splitParams) {
+                String[] keyValuePair = splitParam.split("=");
 
-            params.put(keyValuePair[0], keyValuePair[1]);
+                params.put(keyValuePair[0], keyValuePair[1]);
+            }
+            return params;
+        } else
+        {
+            return new HashMap<String, String>();
         }
-        return params;
     }
 
     protected List<String> getOptions(Controller subclass){
         List<String> methods = new ArrayList<String>();
+        methods.add("OPTIONS");
         Method[] subMethods = subclass.getClass().getDeclaredMethods();
         for ( Method subMethod: subMethods) {
             String name = subMethod.getName().toUpperCase();

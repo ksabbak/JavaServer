@@ -18,4 +18,10 @@ public class NoPathController extends Controller {
         return new Response.ResponseBuilder(status).build();
     }
 
+    @Override
+    public Response options(String params, Persistable storage){
+        StatusCode status = StatusCode.NOT_ALLOWED;
+        return new Response.ResponseBuilder(status).build();
+    }
+
 }

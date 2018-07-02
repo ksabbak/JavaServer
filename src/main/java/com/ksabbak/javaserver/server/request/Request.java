@@ -35,7 +35,7 @@ public class Request {
         private final String CONTENT_LENGTH = "Content-Length";
 
         private String text;
-        private HTTPMethod method;
+        private HTTPMethod method = HTTPMethod.UNKNOWN;
         private String path;
         private int contentLength = 0;
         private String body = "";
@@ -46,7 +46,7 @@ public class Request {
                 text = unparsedHeader;
                 method = HTTPMethod.verifyMethod(pullElement(METHOD_POSITION));
                 path = pullElement(PATH_POSITION);
-                if (text.contains(CONTENT_LENGTH)) {
+                if (caseSenselessContains(text, CONTENT_LENGTH)) {
                     contentLength = pullContentLength();
                     addBody(in);
                 }
@@ -81,12 +81,17 @@ public class Request {
         private int pullContentLength(){
             String[] components = text.split("\\R+");
             for (String component : components) {
-                if (component.contains(CONTENT_LENGTH)) {
+                if (caseSenselessContains(component, CONTENT_LENGTH)) {
                     String[] words = component.split(" ");
                     return Integer.parseInt(words[CONTENT_LENGTH_POSITION]);
                 }
             }
             return 0;
         }
+
+        private boolean caseSenselessContains(String container, String contained){
+            return container.toUpperCase().contains(contained.toUpperCase());
+        }
     }
+
 }

@@ -15,7 +15,7 @@ public class ResponseFormatter {
     private static String restOfHeader(Map<String, String> headers){
         String headerLines = "";
         for(Map.Entry<String, String> pair : headers.entrySet()){
-            String formattedLine =NEW_LINE + pair.getKey() + ": " + pair.getValue();
+            String formattedLine = NEW_LINE + pair.getKey() + ": " + pair.getValue();
             headerLines += formattedLine;
         }
 

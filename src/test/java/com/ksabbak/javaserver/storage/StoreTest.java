@@ -36,7 +36,6 @@ public class StoreTest {
         }
     }
 
-
     @Test
     public void createKeyValueNoConflict() {
         try {
@@ -90,6 +89,7 @@ public class StoreTest {
         }
     }
 
+    @Test
     public void readNothingTest() {
            Optional<String> value =  store.read("Hello");
            assertFalse(value.isPresent());
