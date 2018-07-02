@@ -25,7 +25,6 @@ public class HTTPConnection implements Runnable{
             socketGetInputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
             Request request = new Request.RequestParser(in).parse();
-//            Request request = new RequestReader(in).read();
             Response httpResponse = router.route(request);
             String formattedResponse = ResponseFormatter.format(httpResponse);
 

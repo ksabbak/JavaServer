@@ -24,8 +24,9 @@ public abstract class Controller {
     }
 
     public Response options(String params, Persistable storage){
-        StatusCode status = StatusCode.NOT_ALLOWED;
-        return new Response.ResponseBuilder(status).build();
+        StatusCode status = StatusCode.OK;
+        List<String> options = getOptions(this);
+        return new Response.ResponseBuilder(status).options(options).build();
     }
 
     public Response post(String params, Persistable storage){
@@ -61,6 +62,7 @@ public abstract class Controller {
 
     protected List<String> getOptions(Controller subclass){
         List<String> methods = new ArrayList<String>();
+        methods.add("OPTIONS");
         Method[] subMethods = subclass.getClass().getDeclaredMethods();
         for ( Method subMethod: subMethods) {
             String name = subMethod.getName().toUpperCase();
